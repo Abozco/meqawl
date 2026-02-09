@@ -17,6 +17,12 @@ import AdminCompanies from "./pages/admin/AdminCompanies";
 import AdminSubscriptions from "./pages/admin/AdminSubscriptions";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminVerification from "./pages/admin/AdminVerification";
+import DashboardProfile from "./pages/dashboard/DashboardProfile";
+import DashboardProjects from "./pages/dashboard/DashboardProjects";
+import DashboardServices from "./pages/dashboard/DashboardServices";
+import DashboardTeam from "./pages/dashboard/DashboardTeam";
+import DashboardWorks from "./pages/dashboard/DashboardWorks";
+import DashboardSettings from "./pages/dashboard/DashboardSettings";
 
 const queryClient = new QueryClient();
 
@@ -31,8 +37,16 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
             <Route path="/company/:slug" element={<CompanyProfile />} />
+            
+            {/* Company Dashboard Routes */}
+            <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
+            <Route path="/dashboard/profile" element={<AuthGuard><DashboardProfile /></AuthGuard>} />
+            <Route path="/dashboard/projects" element={<AuthGuard><DashboardProjects /></AuthGuard>} />
+            <Route path="/dashboard/services" element={<AuthGuard><DashboardServices /></AuthGuard>} />
+            <Route path="/dashboard/team" element={<AuthGuard><DashboardTeam /></AuthGuard>} />
+            <Route path="/dashboard/works" element={<AuthGuard><DashboardWorks /></AuthGuard>} />
+            <Route path="/dashboard/settings" element={<AuthGuard><DashboardSettings /></AuthGuard>} />
             
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminGuard><AdminDashboard /></AdminGuard>} />
