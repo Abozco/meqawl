@@ -14,16 +14,469 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      companies: {
+        Row: {
+          address: string | null
+          city: string | null
+          company_name: string
+          created_at: string
+          description: string | null
+          email: string | null
+          facebook_url: string | null
+          founded_at: string | null
+          id: string
+          logo: string | null
+          phone_1: string | null
+          phone_2: string | null
+          slug: string | null
+          user_id: string
+          verified: boolean | null
+          whatsapp_number: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          company_name: string
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          facebook_url?: string | null
+          founded_at?: string | null
+          id?: string
+          logo?: string | null
+          phone_1?: string | null
+          phone_2?: string | null
+          slug?: string | null
+          user_id: string
+          verified?: boolean | null
+          whatsapp_number?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          company_name?: string
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          facebook_url?: string | null
+          founded_at?: string | null
+          id?: string
+          logo?: string | null
+          phone_1?: string | null
+          phone_2?: string | null
+          slug?: string | null
+          user_id?: string
+          verified?: boolean | null
+          whatsapp_number?: string | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string
+          company_id: string | null
+          created_at: string
+          id: string
+          is_read: boolean | null
+          sender_type: Database["public"]["Enums"]["notification_sender"]
+          title: string
+        }
+        Insert: {
+          body: string
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          sender_type: Database["public"]["Enums"]["notification_sender"]
+          title: string
+        }
+        Update: {
+          body?: string
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          sender_type?: Database["public"]["Enums"]["notification_sender"]
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          codes: string
+          company_id: string
+          created_at: string
+          duration: Database["public"]["Enums"]["subscription_duration"]
+          id: string
+          plan: Database["public"]["Enums"]["subscription_plan"]
+          status: Database["public"]["Enums"]["payment_status"]
+        }
+        Insert: {
+          amount: number
+          codes: string
+          company_id: string
+          created_at?: string
+          duration: Database["public"]["Enums"]["subscription_duration"]
+          id?: string
+          plan: Database["public"]["Enums"]["subscription_plan"]
+          status?: Database["public"]["Enums"]["payment_status"]
+        }
+        Update: {
+          amount?: number
+          codes?: string
+          company_id?: string
+          created_at?: string
+          duration?: Database["public"]["Enums"]["subscription_duration"]
+          id?: string
+          plan?: Database["public"]["Enums"]["subscription_plan"]
+          status?: Database["public"]["Enums"]["payment_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          image: string | null
+          project_status: Database["public"]["Enums"]["project_status"]
+          project_type: Database["public"]["Enums"]["project_type"]
+          title: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          project_status?: Database["public"]["Enums"]["project_status"]
+          project_type: Database["public"]["Enums"]["project_type"]
+          title: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          project_status?: Database["public"]["Enums"]["project_status"]
+          project_type?: Database["public"]["Enums"]["project_type"]
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      services: {
+        Row: {
+          company_id: string
+          created_at: string
+          description: string | null
+          id: string
+          title: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          title: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "services_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      statistics: {
+        Row: {
+          company_id: string
+          date: string
+          facebook_clicks: number | null
+          id: string
+          phone_clicks: number | null
+          visits: number | null
+          whatsapp_clicks: number | null
+        }
+        Insert: {
+          company_id: string
+          date?: string
+          facebook_clicks?: number | null
+          id?: string
+          phone_clicks?: number | null
+          visits?: number | null
+          whatsapp_clicks?: number | null
+        }
+        Update: {
+          company_id?: string
+          date?: string
+          facebook_clicks?: number | null
+          id?: string
+          phone_clicks?: number | null
+          visits?: number | null
+          whatsapp_clicks?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "statistics_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscriptions: {
+        Row: {
+          company_id: string
+          created_at: string
+          duration: Database["public"]["Enums"]["subscription_duration"]
+          ends_at: string | null
+          id: string
+          plan: Database["public"]["Enums"]["subscription_plan"]
+          price: number
+          started_at: string | null
+          status: Database["public"]["Enums"]["subscription_status"]
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          duration?: Database["public"]["Enums"]["subscription_duration"]
+          ends_at?: string | null
+          id?: string
+          plan?: Database["public"]["Enums"]["subscription_plan"]
+          price: number
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["subscription_status"]
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          duration?: Database["public"]["Enums"]["subscription_duration"]
+          ends_at?: string | null
+          id?: string
+          plan?: Database["public"]["Enums"]["subscription_plan"]
+          price?: number
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["subscription_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_tickets: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          message: string
+          reply: string | null
+          status: Database["public"]["Enums"]["ticket_status"]
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          message: string
+          reply?: string | null
+          status?: Database["public"]["Enums"]["ticket_status"]
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          message?: string
+          reply?: string | null
+          status?: Database["public"]["Enums"]["ticket_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_tickets_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_members: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          name: string
+          photo: string | null
+          position: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          name: string
+          photo?: string | null
+          position: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          name?: string
+          photo?: string | null
+          position?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_members_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      works: {
+        Row: {
+          company_id: string
+          created_at: string
+          description: string | null
+          id: string
+          image: string | null
+          title: string
+          work_type: Database["public"]["Enums"]["work_type"]
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          title: string
+          work_type: Database["public"]["Enums"]["work_type"]
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          title?: string
+          work_type?: Database["public"]["Enums"]["work_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "works_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_company_id: { Args: { _user_id: string }; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "company"
+      notification_sender: "support" | "admin" | "subscription"
+      payment_status: "pending" | "confirmed" | "rejected"
+      project_status: "قيد_التنفيذ" | "مكتمل"
+      project_type: "سكني" | "تجاري" | "صناعي" | "بنية_تحتية"
+      subscription_duration: "monthly" | "yearly"
+      subscription_plan: "basic" | "premium" | "pro"
+      subscription_status: "active" | "expired" | "cancelled" | "pending"
+      ticket_status: "new" | "replied" | "closed"
+      work_type: "تنفيذ" | "تشطيب" | "صيانة"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +603,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "company"],
+      notification_sender: ["support", "admin", "subscription"],
+      payment_status: ["pending", "confirmed", "rejected"],
+      project_status: ["قيد_التنفيذ", "مكتمل"],
+      project_type: ["سكني", "تجاري", "صناعي", "بنية_تحتية"],
+      subscription_duration: ["monthly", "yearly"],
+      subscription_plan: ["basic", "premium", "pro"],
+      subscription_status: ["active", "expired", "cancelled", "pending"],
+      ticket_status: ["new", "replied", "closed"],
+      work_type: ["تنفيذ", "تشطيب", "صيانة"],
+    },
   },
 } as const
