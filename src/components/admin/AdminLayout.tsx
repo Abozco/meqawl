@@ -17,6 +17,7 @@ const menuItems = [
   { icon: Bell, label: "الإشعارات", path: "/admin/notifications" },
   { icon: BarChart3, label: "الإحصائيات", path: "/admin/statistics" },
   { icon: Settings, label: "الإعدادات", path: "/admin/settings" },
+  { icon: ChevronRight, label: "لوحة الشركة", path: "/dashboard", highlight: true },
 ];
 
 interface AdminLayoutProps {
@@ -54,7 +55,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             to={item.path}
             onClick={() => setMobileOpen(false)}
             className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-              isActive(item.path)
+              item.highlight
+                ? "text-accent border border-accent/20 hover:bg-accent/10 mt-2"
+                : isActive(item.path)
                 ? "bg-destructive/10 text-destructive"
                 : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
             }`}
