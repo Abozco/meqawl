@@ -30,15 +30,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Fetch role and company info
+          // Use setTimeout to avoid Supabase deadlock, but await inside
           setTimeout(async () => {
             await fetchUserData(session.user.id);
           }, 0);
         } else {
           setRole(null);
           setCompanyId(null);
+          setLoading(false);
         }
-        setLoading(false);
       }
     );
 
@@ -59,15 +59,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUserData = async (userId: string) => {
     try {
-      // Fetch role
-      const { data: roleData } = await supabase
+      // Fetch role - prioritize admin role if user has multiple roles
+      const { data: rolesData } = await supabase
         .from('user_roles')
         .select('role')
-        .eq('user_id', userId)
-        .maybeSingle();
+        .eq('user_id', userId);
       
-      if (roleData) {
-        setRole(roleData.role as AppRole);
+      if (rolesData && rolesData.length > 0) {
+        const hasAdmin = rolesData.some(r => r.role === 'admin');
+        setRole(hasAdmin ? 'admin' : (rolesData[0].role as AppRole));
       }
 
       // Fetch company ID

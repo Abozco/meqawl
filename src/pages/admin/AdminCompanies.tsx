@@ -78,6 +78,34 @@ const AdminCompanies = () => {
     }
   };
 
+  const confirmPayment = async (companyId: string) => {
+    try {
+      const { error: payErr } = await supabase.from("payments").update({ status: "confirmed" }).eq("company_id", companyId).eq("status", "pending");
+      if (payErr) throw payErr;
+      const { error: subErr } = await supabase.from("subscriptions").update({ status: "active", started_at: new Date().toISOString(), ends_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() }).eq("company_id", companyId).eq("status", "pending");
+      if (subErr) throw subErr;
+      // Send notification
+      await supabase.from("notifications").insert({ company_id: companyId, title: "تم تفعيل حسابك", body: "تم تأكيد الدفع وتفعيل اشتراكك بنجاح.", sender_type: "subscription" });
+      toast.success("تم تأكيد الدفع وتفعيل الاشتراك");
+      fetchCompanies();
+    } catch {
+      toast.error("حدث خطأ في تأكيد الدفع");
+    }
+  };
+
+  const rejectPayment = async (companyId: string) => {
+    try {
+      const { error: payErr } = await supabase.from("payments").update({ status: "rejected" }).eq("company_id", companyId).eq("status", "pending");
+      if (payErr) throw payErr;
+      // Send notification
+      await supabase.from("notifications").insert({ company_id: companyId, title: "تم رفض الدفع", body: "كود الشحن غير صالح، الرجاء التأكد من بياناتك وإعادة المحاولة.", sender_type: "subscription" });
+      toast.success("تم رفض الدفع");
+      fetchCompanies();
+    } catch {
+      toast.error("حدث خطأ في رفض الدفع");
+    }
+  };
+
   const handleDelete = async () => {
     if (!selectedCompany) return;
     try {
@@ -194,6 +222,17 @@ const AdminCompanies = () => {
                                     <Eye className="w-4 h-4 ml-2" /> عرض الصفحة
                                   </a>
                                 </DropdownMenuItem>
+                                {payment?.status === "pending" && (
+                                  <>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem onClick={() => confirmPayment(company.id)} className="text-green-700">
+                                      <CheckCircle className="w-4 h-4 ml-2" /> تأكيد الدفع
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => rejectPayment(company.id)} className="text-destructive">
+                                      <Ban className="w-4 h-4 ml-2" /> رفض الدفع
+                                    </DropdownMenuItem>
+                                  </>
+                                )}
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem onClick={() => updateCompany(company.id, { verified: !company.verified }, company.verified ? "تم إلغاء التوثيق" : "تم توثيق الشركة")}>
                                   {company.verified ? <><ShieldOff className="w-4 h-4 ml-2" /> إلغاء التوثيق</> : <><ShieldCheck className="w-4 h-4 ml-2" /> توثيق الشركة</>}

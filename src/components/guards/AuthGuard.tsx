@@ -9,18 +9,23 @@ interface AuthGuardProps {
 }
 
 const AuthGuard = ({ children }: AuthGuardProps) => {
-  const { user, loading, companyId } = useAuth();
+  const { user, loading, companyId, role } = useAuth();
   const [checking, setChecking] = useState(true);
   const [banned, setBanned] = useState(false);
   const [paymentPending, setPaymentPending] = useState(false);
 
   useEffect(() => {
+    if (!loading && role === 'admin') {
+      // Admins bypass all checks
+      setChecking(false);
+      return;
+    }
     if (!loading && companyId) {
       checkStatus();
     } else if (!loading) {
       setChecking(false);
     }
-  }, [loading, companyId]);
+  }, [loading, companyId, role]);
 
   const checkStatus = async () => {
     if (!companyId) { setChecking(false); return; }
