@@ -23,6 +23,7 @@ import DashboardServices from "./pages/dashboard/DashboardServices";
 import DashboardTeam from "./pages/dashboard/DashboardTeam";
 import DashboardWorks from "./pages/dashboard/DashboardWorks";
 import DashboardSettings from "./pages/dashboard/DashboardSettings";
+import DashboardStatistics from "./pages/dashboard/DashboardStatistics";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
             <Route path="/dashboard/services" element={<AuthGuard><DashboardServices /></AuthGuard>} />
             <Route path="/dashboard/team" element={<AuthGuard><DashboardTeam /></AuthGuard>} />
             <Route path="/dashboard/works" element={<AuthGuard><DashboardWorks /></AuthGuard>} />
+            <Route path="/dashboard/statistics" element={<AuthGuard><DashboardStatistics /></AuthGuard>} />
             <Route path="/dashboard/settings" element={<AuthGuard><DashboardSettings /></AuthGuard>} />
             
             {/* Admin Routes */}
