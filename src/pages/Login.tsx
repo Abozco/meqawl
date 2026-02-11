@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/sonner";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +29,14 @@ const Login = () => {
         : error.message);
     } else {
       toast.success("تم تسجيل الدخول بنجاح");
-      navigate("/dashboard");
+      // Check if user is admin to redirect to admin panel
+      const { data: roles } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', (await supabase.auth.getUser()).data.user?.id ?? '');
+      
+      const isAdmin = roles?.some(r => r.role === 'admin');
+      navigate(isAdmin ? "/admin" : "/dashboard");
     }
 
     setLoading(false);

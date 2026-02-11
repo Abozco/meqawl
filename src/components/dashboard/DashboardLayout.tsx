@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Building2, LayoutDashboard, FolderKanban, Users, Wrench, Briefcase,
-  BarChart3, Settings, MessageSquare, Bell, LogOut, ChevronRight, ChevronLeft, Menu
+  BarChart3, Settings, MessageSquare, Bell, LogOut, ChevronRight, ChevronLeft, Menu, Shield
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "لوحة التحكم", path: "/dashboard" },
@@ -27,6 +28,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const { role, signOut } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -57,11 +59,24 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             {!collapsed && <span>{item.label}</span>}
           </Link>
         ))}
+        {role === 'admin' && (
+          <Link
+            to="/admin"
+            onClick={() => setMobileOpen(false)}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors mt-2 border border-destructive/20"
+          >
+            <Shield className="w-5 h-5 flex-shrink-0" />
+            {!collapsed && <span>لوحة الإدارة</span>}
+          </Link>
+        )}
       </nav>
 
       {/* Logout */}
       <div className="p-3 border-t border-sidebar-border">
-        <button className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-sidebar-foreground/70 hover:bg-destructive/10 hover:text-destructive transition-colors w-full">
+        <button 
+          onClick={() => signOut()}
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-sidebar-foreground/70 hover:bg-destructive/10 hover:text-destructive transition-colors w-full"
+        >
           <LogOut className="w-5 h-5 flex-shrink-0" />
           {!collapsed && <span>تسجيل الخروج</span>}
         </button>
