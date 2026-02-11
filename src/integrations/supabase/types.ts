@@ -156,6 +156,39 @@ export type Database = {
           },
         ]
       }
+      plan_offers: {
+        Row: {
+          created_at: string | null
+          duration: Database["public"]["Enums"]["subscription_duration"]
+          id: string
+          is_active: boolean | null
+          offer_price: number | null
+          original_price: number
+          plan: Database["public"]["Enums"]["subscription_plan"]
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          duration: Database["public"]["Enums"]["subscription_duration"]
+          id?: string
+          is_active?: boolean | null
+          offer_price?: number | null
+          original_price: number
+          plan: Database["public"]["Enums"]["subscription_plan"]
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          duration?: Database["public"]["Enums"]["subscription_duration"]
+          id?: string
+          is_active?: boolean | null
+          offer_price?: number | null
+          original_price?: number
+          plan?: Database["public"]["Enums"]["subscription_plan"]
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -224,6 +257,7 @@ export type Database = {
           created_at: string
           description: string | null
           id: string
+          price: number | null
           title: string
         }
         Insert: {
@@ -231,6 +265,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          price?: number | null
           title: string
         }
         Update: {
@@ -238,6 +273,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          price?: number | null
           title?: string
         }
         Relationships: [
@@ -249,6 +285,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      site_settings: {
+        Row: {
+          id: string
+          key: string
+          updated_at: string | null
+          value: string
+        }
+        Insert: {
+          id?: string
+          key: string
+          updated_at?: string | null
+          value: string
+        }
+        Update: {
+          id?: string
+          key?: string
+          updated_at?: string | null
+          value?: string
+        }
+        Relationships: []
       }
       statistics: {
         Row: {

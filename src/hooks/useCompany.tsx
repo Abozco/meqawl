@@ -28,9 +28,9 @@ interface Subscription {
 
 // Plan limits
 const planLimits = {
-  basic: { projects: 3, services: 5, team: 3, works: 5 },
-  premium: { projects: 10, services: 15, team: 10, works: 15 },
-  pro: { projects: 50, services: 50, team: 50, works: 50 },
+  basic: { projects: 7, services: 7, team: 4, works: 7 },
+  premium: { projects: 15, services: 15, team: 7, works: 15 },
+  pro: { projects: 25, services: 25, team: 10, works: 25 },
 };
 
 export const useCompany = () => {
