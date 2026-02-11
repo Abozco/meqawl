@@ -17,6 +17,7 @@ export type Database = {
       companies: {
         Row: {
           address: string | null
+          banned: boolean | null
           city: string | null
           company_name: string
           created_at: string
@@ -28,6 +29,7 @@ export type Database = {
           logo: string | null
           phone_1: string | null
           phone_2: string | null
+          restricted: boolean | null
           slug: string | null
           user_id: string
           verified: boolean | null
@@ -35,6 +37,7 @@ export type Database = {
         }
         Insert: {
           address?: string | null
+          banned?: boolean | null
           city?: string | null
           company_name: string
           created_at?: string
@@ -46,6 +49,7 @@ export type Database = {
           logo?: string | null
           phone_1?: string | null
           phone_2?: string | null
+          restricted?: boolean | null
           slug?: string | null
           user_id: string
           verified?: boolean | null
@@ -53,6 +57,7 @@ export type Database = {
         }
         Update: {
           address?: string | null
+          banned?: boolean | null
           city?: string | null
           company_name?: string
           created_at?: string
@@ -64,6 +69,7 @@ export type Database = {
           logo?: string | null
           phone_1?: string | null
           phone_2?: string | null
+          restricted?: boolean | null
           slug?: string | null
           user_id?: string
           verified?: boolean | null
