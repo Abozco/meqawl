@@ -1,7 +1,25 @@
+import { useEffect, useState } from "react";
 import { Building2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const Footer = () => {
+  const [email, setEmail] = useState("info@moqawel.ly");
+  const [phone, setPhone] = useState("+218 91 000 0000");
+
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await supabase.from("site_settings").select("key, value");
+      if (data) {
+        data.forEach((s) => {
+          if (s.key === "footer_email") setEmail(s.value);
+          if (s.key === "footer_phone") setPhone(s.value);
+        });
+      }
+    };
+    fetch();
+  }, []);
+
   return (
     <footer className="bg-primary text-primary-foreground py-12">
       <div className="container mx-auto px-4">
@@ -28,8 +46,8 @@ const Footer = () => {
           <div>
             <h4 className="font-heading font-bold mb-4">تواصل معنا</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/60">
-              <li>البريد: info@moqawel.ly</li>
-              <li>الهاتف: +218 91 000 0000</li>
+              <li>البريد: {email}</li>
+              <li>الهاتف: {phone}</li>
             </ul>
           </div>
         </div>

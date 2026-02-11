@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Building2, LayoutDashboard, Users, CreditCard, CheckCircle,
-  Settings, Bell, LogOut, ChevronRight, ChevronLeft, Menu, MessageSquare, BarChart3
+  Settings, Bell, LogOut, ChevronRight, ChevronLeft, Menu, MessageSquare, BarChart3, Tag
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -16,6 +16,7 @@ const menuItems = [
   { icon: MessageSquare, label: "الدعم الفني", path: "/admin/support" },
   { icon: Bell, label: "الإشعارات", path: "/admin/notifications" },
   { icon: BarChart3, label: "الإحصائيات", path: "/admin/statistics" },
+  { icon: Tag, label: "عروض الأسعار", path: "/admin/offers" },
   { icon: Settings, label: "الإعدادات", path: "/admin/settings" },
   { icon: ChevronRight, label: "لوحة الشركة", path: "/dashboard", highlight: true },
 ];
