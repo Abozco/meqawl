@@ -12,11 +12,14 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import CompanyProfile from "./pages/CompanyProfile";
 import NotFound from "./pages/NotFound";
+import PaymentPending from "./pages/PaymentPending";
+import AccountBanned from "./pages/AccountBanned";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminCompanies from "./pages/admin/AdminCompanies";
 import AdminSubscriptions from "./pages/admin/AdminSubscriptions";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminVerification from "./pages/admin/AdminVerification";
+import AdminSupport from "./pages/admin/AdminSupport";
 import DashboardProfile from "./pages/dashboard/DashboardProfile";
 import DashboardProjects from "./pages/dashboard/DashboardProjects";
 import DashboardServices from "./pages/dashboard/DashboardServices";
@@ -25,6 +28,7 @@ import DashboardWorks from "./pages/dashboard/DashboardWorks";
 import DashboardSettings from "./pages/dashboard/DashboardSettings";
 import DashboardStatistics from "./pages/dashboard/DashboardStatistics";
 import DashboardSupport from "./pages/dashboard/DashboardSupport";
+import DashboardNotifications from "./pages/dashboard/DashboardNotifications";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +43,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/payment-pending" element={<PaymentPending />} />
+            <Route path="/account-banned" element={<AccountBanned />} />
             <Route path="/company/:slug" element={<CompanyProfile />} />
             
             {/* Company Dashboard Routes */}
@@ -51,6 +57,7 @@ const App = () => (
             <Route path="/dashboard/statistics" element={<AuthGuard><DashboardStatistics /></AuthGuard>} />
             <Route path="/dashboard/settings" element={<AuthGuard><DashboardSettings /></AuthGuard>} />
             <Route path="/dashboard/support" element={<AuthGuard><DashboardSupport /></AuthGuard>} />
+            <Route path="/dashboard/notifications" element={<AuthGuard><DashboardNotifications /></AuthGuard>} />
             
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminGuard><AdminDashboard /></AdminGuard>} />
@@ -58,6 +65,7 @@ const App = () => (
             <Route path="/admin/subscriptions" element={<AdminGuard><AdminSubscriptions /></AdminGuard>} />
             <Route path="/admin/payments" element={<AdminGuard><AdminPayments /></AdminGuard>} />
             <Route path="/admin/verification" element={<AdminGuard><AdminVerification /></AdminGuard>} />
+            <Route path="/admin/support" element={<AdminGuard><AdminSupport /></AdminGuard>} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>
