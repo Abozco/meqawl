@@ -1,12 +1,38 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Building2, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/components/ui/sonner";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      toast.error(error.message === "Invalid login credentials" 
+        ? "بيانات الدخول غير صحيحة" 
+        : error.message === "Email not confirmed"
+        ? "يرجى تأكيد بريدك الإلكتروني أولاً"
+        : error.message);
+    } else {
+      toast.success("تم تسجيل الدخول بنجاح");
+      navigate("/dashboard");
+    }
+
+    setLoading(false);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
@@ -23,12 +49,12 @@ const Login = () => {
         </div>
 
         <div className="bg-card rounded-2xl p-8 card-elevated border border-border">
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-5" onSubmit={handleLogin}>
             <div className="space-y-2">
               <Label htmlFor="email">البريد الإلكتروني</Label>
               <div className="relative">
                 <Mail className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input id="email" type="email" placeholder="example@company.com" className="pr-10" />
+                <Input id="email" type="email" placeholder="example@company.com" className="pr-10" value={email} onChange={(e) => setEmail(e.target.value)} required />
               </div>
             </div>
 
@@ -41,6 +67,9 @@ const Login = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   className="pr-10 pl-10"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
                 <button
                   type="button"
@@ -52,8 +81,8 @@ const Login = () => {
               </div>
             </div>
 
-            <Button className="w-full bg-accent-gradient text-accent-foreground hover:opacity-90 h-11" type="submit">
-              تسجيل الدخول
+            <Button className="w-full bg-accent-gradient text-accent-foreground hover:opacity-90 h-11" type="submit" disabled={loading}>
+              {loading ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
             </Button>
           </form>
         </div>
