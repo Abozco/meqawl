@@ -58,12 +58,12 @@ const HeroSection = () => {
           >
             <Button size="lg" className="bg-accent-gradient text-accent-foreground hover:opacity-90 text-base px-8 h-12" asChild>
               <Link to="/register">
-                ابدأ الآن مجاناً
+                سجّل شركتك
                 <ArrowLeft className="mr-2 w-5 h-5" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-base px-8 h-12" asChild>
-              <a href="#features">اكتشف المميزات</a>
+              <Link to="/login">تسجيل الدخول</Link>
             </Button>
           </motion.div>
 
