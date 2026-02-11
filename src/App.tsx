@@ -20,6 +20,8 @@ import AdminSubscriptions from "./pages/admin/AdminSubscriptions";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminVerification from "./pages/admin/AdminVerification";
 import AdminSupport from "./pages/admin/AdminSupport";
+import AdminStatistics from "./pages/admin/AdminStatistics";
+import AdminNotifications from "./pages/admin/AdminNotifications";
 import DashboardProfile from "./pages/dashboard/DashboardProfile";
 import DashboardProjects from "./pages/dashboard/DashboardProjects";
 import DashboardServices from "./pages/dashboard/DashboardServices";
@@ -66,6 +68,8 @@ const App = () => (
             <Route path="/admin/payments" element={<AdminGuard><AdminPayments /></AdminGuard>} />
             <Route path="/admin/verification" element={<AdminGuard><AdminVerification /></AdminGuard>} />
             <Route path="/admin/support" element={<AdminGuard><AdminSupport /></AdminGuard>} />
+            <Route path="/admin/statistics" element={<AdminGuard><AdminStatistics /></AdminGuard>} />
+            <Route path="/admin/notifications" element={<AdminGuard><AdminNotifications /></AdminGuard>} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>
