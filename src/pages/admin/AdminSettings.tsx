@@ -11,6 +11,7 @@ import { toast } from "sonner";
 const AdminSettings = () => {
   const [footerEmail, setFooterEmail] = useState("");
   const [footerPhone, setFooterPhone] = useState("");
+  const [supportWhatsapp, setSupportWhatsapp] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -21,6 +22,7 @@ const AdminSettings = () => {
         data.forEach((s) => {
           if (s.key === "footer_email") setFooterEmail(s.value);
           if (s.key === "footer_phone") setFooterPhone(s.value);
+          if (s.key === "support_whatsapp") setSupportWhatsapp(s.value);
         });
       }
       setLoading(false);
@@ -34,6 +36,7 @@ const AdminSettings = () => {
       await Promise.all([
         supabase.from("site_settings").update({ value: footerEmail }).eq("key", "footer_email"),
         supabase.from("site_settings").update({ value: footerPhone }).eq("key", "footer_phone"),
+        supabase.from("site_settings").upsert({ key: "support_whatsapp", value: supportWhatsapp }, { onConflict: "key" }),
       ]);
       toast.success("تم حفظ الإعدادات بنجاح");
     } catch {
@@ -52,7 +55,7 @@ const AdminSettings = () => {
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <Settings className="w-6 h-6 text-accent" /> إعدادات الموقع
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">تعديل بيانات التواصل المعروضة في أسفل الصفحة الرئيسية</p>
+          <p className="text-sm text-muted-foreground mt-1">تعديل بيانات التواصل المعروضة في الموقع</p>
         </div>
 
         <Card>
@@ -67,6 +70,10 @@ const AdminSettings = () => {
             <div className="space-y-2">
               <Label htmlFor="footer_phone">رقم الهاتف</Label>
               <Input id="footer_phone" value={footerPhone} onChange={(e) => setFooterPhone(e.target.value)} dir="ltr" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="support_whatsapp">رقم واتساب الدعم الفني (للزر العائم)</Label>
+              <Input id="support_whatsapp" value={supportWhatsapp} onChange={(e) => setSupportWhatsapp(e.target.value)} dir="ltr" placeholder="مثال: 218912345678" />
             </div>
             <Button onClick={handleSave} disabled={saving}>
               <Save className="w-4 h-4 ml-2" /> {saving ? "جاري الحفظ..." : "حفظ التغييرات"}
