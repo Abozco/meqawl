@@ -42,7 +42,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         </div>
         {!collapsed && (
           <div className="flex flex-col">
-            <span className="font-heading text-lg font-bold text-sidebar-foreground">مقاول</span>
+            <span className="font-heading text-lg font-bold text-sidebar-foreground">مكتبي</span>
             <span className="text-xs text-destructive">لوحة الأدمن</span>
           </div>
         )}

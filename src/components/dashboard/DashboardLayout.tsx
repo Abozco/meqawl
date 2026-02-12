@@ -39,7 +39,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <div className="w-9 h-9 rounded-lg bg-accent-gradient flex items-center justify-center flex-shrink-0">
           <Building2 className="w-5 h-5 text-accent-foreground" />
         </div>
-        {!collapsed && <span className="font-heading text-lg font-bold text-sidebar-foreground">مقاول</span>}
+        {!collapsed && <span className="font-heading text-lg font-bold text-sidebar-foreground">مكتبي</span>}
       </div>
 
       {/* Menu */}

@@ -27,7 +27,7 @@ const HeroSection = () => {
             transition={{ duration: 0.7 }}
           >
             <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent text-sm font-medium mb-6 border border-accent/30">
-              منصة إدارة شركات المقاولات الأولى في ليبيا
+              منصة إدارة المكاتب والشركات الأولى في ليبيا
             </span>
           </motion.div>
 
@@ -38,7 +38,7 @@ const HeroSection = () => {
             transition={{ duration: 0.7, delay: 0.15 }}
           >
             أدِر شركتك بذكاء مع
-            <span className="text-gradient-accent block mt-2">منصة مقاول</span>
+            <span className="text-gradient-accent block mt-2">منصة مكتبي</span>
           </motion.h1>
 
           <motion.p

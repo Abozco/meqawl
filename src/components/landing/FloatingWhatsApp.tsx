@@ -17,7 +17,7 @@ const FloatingWhatsApp = () => {
 
   if (!whatsappNumber) return null;
 
-  const url = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, "")}?text=${encodeURIComponent("مرحباً، أحتاج مساعدة بخصوص الاشتراك في منصة مقاول")}`;
+  const url = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, "")}?text=${encodeURIComponent("مرحباً، أحتاج مساعدة بخصوص الاشتراك في منصة مكتبي")}`;
 
   return (
     <a
