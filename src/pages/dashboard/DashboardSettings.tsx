@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { useCompany } from "@/hooks/useCompany";
 import { useAuth } from "@/hooks/useAuth";
 import ImageUpload from "@/components/dashboard/ImageUpload";
+import SubscriptionManager from "@/components/dashboard/SubscriptionManager";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -179,6 +180,7 @@ const DashboardSettings = () => {
         <Tabs defaultValue="profile" className="space-y-6">
           <TabsList>
             <TabsTrigger value="profile">بيانات الشركة</TabsTrigger>
+            <TabsTrigger value="subscription">الاشتراك</TabsTrigger>
             <TabsTrigger value="security">الأمان</TabsTrigger>
             <TabsTrigger value="danger">حذف الحساب</TabsTrigger>
           </TabsList>
@@ -303,6 +305,10 @@ const DashboardSettings = () => {
                 </form>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="subscription">
+            <SubscriptionManager />
           </TabsContent>
 
           <TabsContent value="security">
