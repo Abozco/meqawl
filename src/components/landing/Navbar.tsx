@@ -14,7 +14,7 @@ const Navbar = () => {
           <div className="w-9 h-9 rounded-lg bg-accent-gradient flex items-center justify-center">
             <Building2 className="w-5 h-5 text-accent-foreground" />
           </div>
-          <span className="font-heading text-xl font-bold text-foreground">مقاول</span>
+          <span className="font-heading text-xl font-bold text-foreground">مكتبي</span>
         </Link>
 
         {/* Desktop Links */}

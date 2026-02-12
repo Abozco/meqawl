@@ -50,7 +50,7 @@ const Login = () => {
             <div className="w-10 h-10 rounded-lg bg-accent-gradient flex items-center justify-center">
               <Building2 className="w-6 h-6 text-accent-foreground" />
             </div>
-            <span className="font-heading text-2xl font-bold text-foreground">مقاول</span>
+            <span className="font-heading text-2xl font-bold text-foreground">مكتبي</span>
           </Link>
           <h1 className="font-heading text-2xl font-bold text-foreground">تسجيل الدخول</h1>
           <p className="text-sm text-muted-foreground mt-1">أدخل بيانات حسابك للوصول إلى لوحة التحكم</p>

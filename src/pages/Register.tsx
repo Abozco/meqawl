@@ -137,7 +137,7 @@ const Register = () => {
             <div className="w-10 h-10 rounded-lg bg-accent-gradient flex items-center justify-center">
               <Building2 className="w-6 h-6 text-accent-foreground" />
             </div>
-            <span className="font-heading text-2xl font-bold text-foreground">مقاول</span>
+            <span className="font-heading text-2xl font-bold text-foreground">مكتبي</span>
           </Link>
           <h1 className="font-heading text-2xl font-bold text-foreground">إنشاء حساب جديد</h1>
           <p className="text-sm text-muted-foreground mt-1">سجّل شركتك واحصل على صفحة احترافية</p>

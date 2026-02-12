@@ -29,10 +29,10 @@ const Footer = () => {
               <div className="w-9 h-9 rounded-lg bg-accent-gradient flex items-center justify-center">
                 <Building2 className="w-5 h-5 text-accent-foreground" />
               </div>
-              <span className="font-heading text-xl font-bold">مقاول</span>
+              <span className="font-heading text-xl font-bold">مكتبي</span>
             </div>
             <p className="text-sm text-primary-foreground/60 leading-relaxed">
-              المنصة الأولى لإدارة شركات ومكاتب المقاولات في ليبيا. حلول رقمية متكاملة لتنمية أعمالك.
+              المنصة الأولى لإدارة المكاتب والشركات في ليبيا. حلول رقمية متكاملة لتنمية أعمالك.
             </p>
           </div>
           <div>
@@ -52,7 +52,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="border-t border-primary-foreground/10 pt-6 text-center text-sm text-primary-foreground/40">
-          © {new Date().getFullYear()} منصة مقاول. جميع الحقوق محفوظة.
+          © {new Date().getFullYear()} منصة مكتبي. جميع الحقوق محفوظة.
         </div>
       </div>
     </footer>

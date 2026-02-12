@@ -25,9 +25,9 @@ const FeaturesSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span className="text-accent font-semibold text-sm mb-2 block">لماذا مقاول؟</span>
+          <span className="text-accent font-semibold text-sm mb-2 block">لماذا مكتبي؟</span>
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">كل ما تحتاجه شركتك في منصة واحدة</h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">أدوات متكاملة صُممت خصيصاً لتلبية احتياجات شركات ومكاتب المقاولات في ليبيا.</p>
+          <p className="text-muted-foreground max-w-xl mx-auto">أدوات متكاملة صُممت خصيصاً لتلبية احتياجات المكاتب والشركات في ليبيا.</p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
