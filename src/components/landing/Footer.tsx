@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Building2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import logo from "@/assets/logo.png";
 
 const Footer = () => {
   const [email, setEmail] = useState("info@moqawel.ly");
@@ -26,9 +26,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-accent-gradient flex items-center justify-center">
-                <Building2 className="w-5 h-5 text-accent-foreground" />
-              </div>
+              <img src={logo} alt="مكتبي" className="w-9 h-9 rounded-lg object-contain" />
               <span className="font-heading text-xl font-bold">مكتبي</span>
             </div>
             <p className="text-sm text-primary-foreground/60 leading-relaxed">

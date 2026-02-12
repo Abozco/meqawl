@@ -4,6 +4,7 @@ import {
   Building2, LayoutDashboard, Users, CreditCard, CheckCircle,
   Settings, Bell, LogOut, ChevronRight, ChevronLeft, Menu, MessageSquare, BarChart3, Tag
 } from "lucide-react";
+import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -37,8 +38,8 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     <>
       {/* Logo */}
       <div className="flex items-center gap-2 p-4 border-b border-sidebar-border">
-        <div className="w-9 h-9 rounded-lg bg-destructive flex items-center justify-center flex-shrink-0">
-          <Building2 className="w-5 h-5 text-destructive-foreground" />
+        <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0">
+          <img src={logo} alt="مكتبي" className="w-9 h-9 rounded-lg object-contain" />
         </div>
         {!collapsed && (
           <div className="flex flex-col">
@@ -116,7 +117,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground hidden sm:block">مدير النظام</span>
             <div className="w-8 h-8 rounded-full bg-destructive/20 flex items-center justify-center">
-              <Building2 className="w-4 h-4 text-destructive" />
+              <img src={logo} alt="مكتبي" className="w-6 h-6 rounded-full object-contain" />
             </div>
           </div>
         </header>

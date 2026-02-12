@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Building2, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -47,9 +48,7 @@ const Login = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-lg bg-accent-gradient flex items-center justify-center">
-              <Building2 className="w-6 h-6 text-accent-foreground" />
-            </div>
+            <img src={logo} alt="مكتبي" className="w-10 h-10 rounded-lg object-contain" />
             <span className="font-heading text-2xl font-bold text-foreground">مكتبي</span>
           </Link>
           <h1 className="font-heading text-2xl font-bold text-foreground">تسجيل الدخول</h1>

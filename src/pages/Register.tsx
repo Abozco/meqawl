@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Building2, Mail, Lock, Eye, EyeOff, User, Phone, AtSign, CreditCard } from "lucide-react";
+import appLogo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -134,9 +135,7 @@ const Register = () => {
       <div className="w-full max-w-2xl">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-lg bg-accent-gradient flex items-center justify-center">
-              <Building2 className="w-6 h-6 text-accent-foreground" />
-            </div>
+            <img src={appLogo} alt="مكتبي" className="w-10 h-10 rounded-lg object-contain" />
             <span className="font-heading text-2xl font-bold text-foreground">مكتبي</span>
           </Link>
           <h1 className="font-heading text-2xl font-bold text-foreground">إنشاء حساب جديد</h1>

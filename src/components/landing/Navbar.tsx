@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Building2 } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.png";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -11,9 +12,7 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-accent-gradient flex items-center justify-center">
-            <Building2 className="w-5 h-5 text-accent-foreground" />
-          </div>
+          <img src={logo} alt="مكتبي" className="w-9 h-9 rounded-lg object-contain" />
           <span className="font-heading text-xl font-bold text-foreground">مكتبي</span>
         </Link>
 
