@@ -13,6 +13,8 @@ import { useCompany } from "@/hooks/useCompany";
 import { useAuth } from "@/hooks/useAuth";
 import ImageUpload from "@/components/dashboard/ImageUpload";
 import SubscriptionManager from "@/components/dashboard/SubscriptionManager";
+import GalleryManager from "@/components/dashboard/GalleryManager";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,6 +39,7 @@ const DashboardSettings = () => {
     company_name: '',
     logo: '',
     city: '',
+    category: '',
     description: '',
     address: '',
     phone_1: '',
@@ -58,6 +61,7 @@ const DashboardSettings = () => {
         company_name: company.company_name || '',
         logo: company.logo || '',
         city: company.city || '',
+        category: (company as any).category || '',
         description: company.description || '',
         address: company.address || '',
         phone_1: company.phone_1 || '',
@@ -81,6 +85,7 @@ const DashboardSettings = () => {
           company_name: formData.company_name,
           logo: formData.logo || null,
           city: formData.city || null,
+          category: formData.category || null,
           description: formData.description || null,
           address: formData.address || null,
           phone_1: formData.phone_1 || null,
@@ -180,6 +185,7 @@ const DashboardSettings = () => {
         <Tabs defaultValue="profile" className="space-y-6">
           <TabsList>
             <TabsTrigger value="profile">بيانات الشركة</TabsTrigger>
+            <TabsTrigger value="gallery">المعرض</TabsTrigger>
             <TabsTrigger value="subscription">الاشتراك</TabsTrigger>
             <TabsTrigger value="security">الأمان</TabsTrigger>
             <TabsTrigger value="danger">حذف الحساب</TabsTrigger>
@@ -224,6 +230,25 @@ const DashboardSettings = () => {
                         value={formData.city}
                         onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                       />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>فئة الشركة</Label>
+                      <Select value={formData.category} onValueChange={(v) => setFormData({ ...formData, category: v })}>
+                        <SelectTrigger><SelectValue placeholder="اختر فئة" /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="عقارات">عقارات</SelectItem>
+                          <SelectItem value="مقاولات">مقاولات</SelectItem>
+                          <SelectItem value="محاسبة">محاسبة</SelectItem>
+                          <SelectItem value="ترجمة">ترجمة</SelectItem>
+                          <SelectItem value="خدمات_عامة">خدمات عامة</SelectItem>
+                          <SelectItem value="استشارات">استشارات</SelectItem>
+                          <SelectItem value="هندسة_مدنية">هندسة مدنية</SelectItem>
+                          <SelectItem value="سيارات">سيارات</SelectItem>
+                          <SelectItem value="صيانة">صيانة</SelectItem>
+                          <SelectItem value="تسويق">تسويق</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-2">
@@ -305,6 +330,10 @@ const DashboardSettings = () => {
                 </form>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="gallery">
+            <GalleryManager />
           </TabsContent>
 
           <TabsContent value="subscription">

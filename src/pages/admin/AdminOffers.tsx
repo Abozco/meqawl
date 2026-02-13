@@ -26,7 +26,15 @@ const AdminOffers = () => {
   const queryClient = useQueryClient();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingOffer, setEditingOffer] = useState<any>(null);
-  const [form, setForm] = useState({ plan: "basic", duration: "monthly", original_price: "", offer_price: "", is_active: true });
+  const [form, setForm] = useState({
+    plan: "basic",
+    duration: "monthly",
+    original_price: "",
+    offer_price: "",
+    offer_type: "price",
+    bonus_months: "",
+    is_active: true,
+  });
 
   const { data: offers = [], isLoading } = useQuery({
     queryKey: ["admin-offers"],
@@ -43,7 +51,9 @@ const AdminOffers = () => {
         plan: form.plan as any,
         duration: form.duration as any,
         original_price: Number(form.original_price),
-        offer_price: form.offer_price ? Number(form.offer_price) : null,
+        offer_price: form.offer_type === "price" && form.offer_price ? Number(form.offer_price) : null,
+        offer_type: form.offer_type,
+        bonus_months: form.offer_type === "duration" && form.bonus_months ? Number(form.bonus_months) : null,
         is_active: form.is_active,
       };
       if (editingOffer) {
@@ -84,7 +94,7 @@ const AdminOffers = () => {
 
   const resetForm = () => {
     setEditingOffer(null);
-    setForm({ plan: "basic", duration: "monthly", original_price: "", offer_price: "", is_active: true });
+    setForm({ plan: "basic", duration: "monthly", original_price: "", offer_price: "", offer_type: "price", bonus_months: "", is_active: true });
   };
 
   const openEdit = (offer: any) => {
@@ -94,6 +104,8 @@ const AdminOffers = () => {
       duration: offer.duration,
       original_price: String(offer.original_price),
       offer_price: offer.offer_price ? String(offer.offer_price) : "",
+      offer_type: offer.offer_type || "price",
+      bonus_months: offer.bonus_months ? String(offer.bonus_months) : "",
       is_active: offer.is_active,
     });
     setDialogOpen(true);
@@ -138,10 +150,15 @@ const AdminOffers = () => {
                 <CardContent className="space-y-3">
                   <div className="text-sm text-muted-foreground">{durationLabels[offer.duration]}</div>
                   <div className="flex items-baseline gap-2">
-                    {offer.offer_price ? (
+                    {offer.offer_type === "price" && offer.offer_price ? (
                       <>
                         <span className="text-2xl font-bold text-accent">{offer.offer_price} د.ل</span>
                         <span className="text-sm line-through text-muted-foreground">{offer.original_price} د.ل</span>
+                      </>
+                    ) : offer.offer_type === "duration" && offer.bonus_months ? (
+                      <>
+                        <span className="text-2xl font-bold text-foreground">{offer.original_price} د.ل</span>
+                        <Badge className="bg-green-100 text-green-800">+{offer.bonus_months} شهر مجاناً</Badge>
                       </>
                     ) : (
                       <span className="text-2xl font-bold text-foreground">{offer.original_price} د.ل</span>
@@ -212,9 +229,27 @@ const AdminOffers = () => {
               <Input type="number" min="0" value={form.original_price} onChange={(e) => setForm({ ...form, original_price: e.target.value })} required />
             </div>
             <div className="space-y-2">
-              <Label>سعر العرض (د.ل) - اختياري</Label>
-              <Input type="number" min="0" value={form.offer_price} onChange={(e) => setForm({ ...form, offer_price: e.target.value })} placeholder="اتركه فارغاً إن لم يكن هناك عرض" />
+              <Label>نوع العرض</Label>
+              <Select value={form.offer_type} onValueChange={(v) => setForm({ ...form, offer_type: v })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="price">خصم في السعر</SelectItem>
+                  <SelectItem value="duration">إضافة مدة مجانية</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
+            {form.offer_type === "price" && (
+              <div className="space-y-2">
+                <Label>سعر العرض (د.ل)</Label>
+                <Input type="number" min="0" value={form.offer_price} onChange={(e) => setForm({ ...form, offer_price: e.target.value })} placeholder="السعر بعد الخصم" />
+              </div>
+            )}
+            {form.offer_type === "duration" && (
+              <div className="space-y-2">
+                <Label>عدد الأشهر المجانية الإضافية</Label>
+                <Input type="number" min="1" value={form.bonus_months} onChange={(e) => setForm({ ...form, bonus_months: e.target.value })} placeholder="مثال: 1 (شهرين بسعر شهر)" />
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} />
               <Label>مفعّل</Label>
