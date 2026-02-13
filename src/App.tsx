@@ -24,6 +24,7 @@ import AdminStatistics from "./pages/admin/AdminStatistics";
 import AdminNotifications from "./pages/admin/AdminNotifications";
 import AdminOffers from "./pages/admin/AdminOffers";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminPromoCodes from "./pages/admin/AdminPromoCodes";
 import DashboardProfile from "./pages/dashboard/DashboardProfile";
 import DashboardProjects from "./pages/dashboard/DashboardProjects";
 import DashboardServices from "./pages/dashboard/DashboardServices";
@@ -74,6 +75,7 @@ const App = () => (
             <Route path="/admin/notifications" element={<AdminGuard><AdminNotifications /></AdminGuard>} />
             <Route path="/admin/offers" element={<AdminGuard><AdminOffers /></AdminGuard>} />
             <Route path="/admin/settings" element={<AdminGuard><AdminSettings /></AdminGuard>} />
+            <Route path="/admin/promo-codes" element={<AdminGuard><AdminPromoCodes /></AdminGuard>} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>

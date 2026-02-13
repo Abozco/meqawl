@@ -222,6 +222,11 @@ const AdminCompanies = () => {
                                     <Eye className="w-4 h-4 ml-2" /> عرض الصفحة
                                   </a>
                                 </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                  <a href={`/dashboard?admin_view=${company.id}`} target="_blank" rel="noopener noreferrer">
+                                    <Shield className="w-4 h-4 ml-2" /> الدخول للوحة التحكم
+                                  </a>
+                                </DropdownMenuItem>
                                 {payment?.status === "pending" && (
                                   <>
                                     <DropdownMenuSeparator />

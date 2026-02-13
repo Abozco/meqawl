@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           address: string | null
           banned: boolean | null
+          category: string | null
           city: string | null
           company_name: string
           created_at: string
@@ -38,6 +39,7 @@ export type Database = {
         Insert: {
           address?: string | null
           banned?: boolean | null
+          category?: string | null
           city?: string | null
           company_name: string
           created_at?: string
@@ -58,6 +60,7 @@ export type Database = {
         Update: {
           address?: string | null
           banned?: boolean | null
+          category?: string | null
           city?: string | null
           company_name?: string
           created_at?: string
@@ -76,6 +79,35 @@ export type Database = {
           whatsapp_number?: string | null
         }
         Relationships: []
+      }
+      gallery_images: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          image_url: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          image_url: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          image_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gallery_images_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       notifications: {
         Row: {
@@ -158,31 +190,37 @@ export type Database = {
       }
       plan_offers: {
         Row: {
+          bonus_months: number | null
           created_at: string | null
           duration: Database["public"]["Enums"]["subscription_duration"]
           id: string
           is_active: boolean | null
           offer_price: number | null
+          offer_type: string
           original_price: number
           plan: Database["public"]["Enums"]["subscription_plan"]
           updated_at: string | null
         }
         Insert: {
+          bonus_months?: number | null
           created_at?: string | null
           duration: Database["public"]["Enums"]["subscription_duration"]
           id?: string
           is_active?: boolean | null
           offer_price?: number | null
+          offer_type?: string
           original_price: number
           plan: Database["public"]["Enums"]["subscription_plan"]
           updated_at?: string | null
         }
         Update: {
+          bonus_months?: number | null
           created_at?: string | null
           duration?: Database["public"]["Enums"]["subscription_duration"]
           id?: string
           is_active?: boolean | null
           offer_price?: number | null
+          offer_type?: string
           original_price?: number
           plan?: Database["public"]["Enums"]["subscription_plan"]
           updated_at?: string | null
@@ -250,6 +288,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      promo_codes: {
+        Row: {
+          bonus_months: number | null
+          code: string
+          created_at: string
+          discount_amount: number | null
+          id: string
+          is_active: boolean
+          max_uses: number | null
+          used_count: number
+        }
+        Insert: {
+          bonus_months?: number | null
+          code: string
+          created_at?: string
+          discount_amount?: number | null
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          used_count?: number
+        }
+        Update: {
+          bonus_months?: number | null
+          code?: string
+          created_at?: string
+          discount_amount?: number | null
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          used_count?: number
+        }
+        Relationships: []
       }
       services: {
         Row: {

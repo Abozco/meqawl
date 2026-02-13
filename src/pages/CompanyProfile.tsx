@@ -1,10 +1,24 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  Building2, MapPin, Phone, Mail, Users, FolderKanban, Wrench, CheckCircle2, ExternalLink, MessageCircle
+  Building2, MapPin, Phone, Mail, Users, FolderKanban, Wrench, CheckCircle2, ExternalLink, MessageCircle, Images
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import appLogo from "@/assets/logo.png";
+
+const categoryLabels: Record<string, string> = {
+  "عقارات": "عقارات",
+  "مقاولات": "مقاولات",
+  "محاسبة": "محاسبة",
+  "ترجمة": "ترجمة",
+  "خدمات_عامة": "خدمات عامة",
+  "استشارات": "استشارات",
+  "هندسة_مدنية": "هندسة مدنية",
+  "سيارات": "سيارات",
+  "صيانة": "صيانة",
+  "تسويق": "تسويق",
+};
 
 const CompanyProfile = () => {
   const { slug } = useParams();
@@ -12,7 +26,17 @@ const CompanyProfile = () => {
   const [projects, setProjects] = useState<any[]>([]);
   const [services, setServices] = useState<any[]>([]);
   const [team, setTeam] = useState<any[]>([]);
+  const [gallery, setGallery] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const sections = [
+    { id: "about", label: "عن الشركة" },
+    { id: "projects", label: "المشاريع" },
+    { id: "services", label: "الخدمات" },
+    { id: "gallery", label: "المعرض" },
+    { id: "team", label: "الفريق" },
+    { id: "contact", label: "التواصل" },
+  ];
 
   useEffect(() => {
     const fetchCompany = async () => {
@@ -21,14 +45,16 @@ const CompanyProfile = () => {
       if (!comp) { setLoading(false); return; }
       setCompany(comp);
 
-      const [p, s, t] = await Promise.all([
+      const [p, s, t, g] = await Promise.all([
         supabase.from("projects").select("*").eq("company_id", comp.id),
         supabase.from("services").select("*").eq("company_id", comp.id),
         supabase.from("team_members").select("*").eq("company_id", comp.id),
+        supabase.from("gallery_images").select("*").eq("company_id", comp.id).order("created_at"),
       ]);
       setProjects(p.data || []);
       setServices(s.data || []);
       setTeam(t.data || []);
+      setGallery(g.data || []);
 
       // Track visit
       const today = new Date().toISOString().split("T")[0];
@@ -45,42 +71,76 @@ const CompanyProfile = () => {
     fetchCompany();
   }, [slug]);
 
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   if (loading) return <div className="min-h-screen flex items-center justify-center text-muted-foreground">جاري التحميل...</div>;
   if (!company) return <div className="min-h-screen flex items-center justify-center text-muted-foreground">الشركة غير موجودة</div>;
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="bg-hero-gradient py-16">
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Sticky Header */}
+      <header className="bg-card border-b border-border sticky top-0 z-50">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-            <div className="w-20 h-20 rounded-2xl bg-card/10 border border-primary-foreground/20 flex items-center justify-center overflow-hidden">
-              {company.logo ? (
-                <img src={company.logo} alt={company.company_name} className="w-full h-full object-cover" />
-              ) : (
-                <Building2 className="w-10 h-10 text-accent" />
-              )}
-            </div>
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <h1 className="font-heading text-3xl font-bold text-primary-foreground">{company.company_name}</h1>
-                {company.verified && <CheckCircle2 className="w-6 h-6 text-accent" />}
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center overflow-hidden flex-shrink-0">
+                {company.logo ? (
+                  <img src={company.logo} alt={company.company_name} className="w-full h-full object-cover" />
+                ) : (
+                  <Building2 className="w-5 h-5 text-muted-foreground" />
+                )}
               </div>
-              <div className="flex items-center gap-4 text-primary-foreground/60 text-sm">
-                {company.city && <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {company.city}</span>}
-                {company.founded_at && <span>تأسست عام {new Date(company.founded_at).getFullYear()}</span>}
+              <div className="flex items-center gap-2">
+                <h1 className="font-heading text-lg font-bold text-foreground">{company.company_name}</h1>
+                {company.verified && <CheckCircle2 className="w-5 h-5 text-blue-500" />}
               </div>
             </div>
+            <nav className="hidden md:flex items-center gap-1">
+              {sections.map((s) => (
+                <button
+                  key={s.id}
+                  onClick={() => scrollTo(s.id)}
+                  className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
+                >
+                  {s.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Banner */}
+      <div className="bg-hero-gradient py-12">
+        <div className="container mx-auto px-4 text-center">
+          <div className="w-20 h-20 rounded-2xl bg-card/10 border border-primary-foreground/20 flex items-center justify-center overflow-hidden mx-auto mb-4">
+            {company.logo ? (
+              <img src={company.logo} alt={company.company_name} className="w-full h-full object-cover" />
+            ) : (
+              <Building2 className="w-10 h-10 text-accent" />
+            )}
+          </div>
+          <h2 className="font-heading text-3xl font-bold text-primary-foreground mb-2">{company.company_name}</h2>
+          <div className="flex items-center justify-center gap-4 text-primary-foreground/60 text-sm">
+            {company.category && (
+              <span className="bg-primary-foreground/10 px-3 py-1 rounded-full text-primary-foreground/80">
+                {categoryLabels[company.category] || company.category}
+              </span>
+            )}
+            {company.city && <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {company.city}</span>}
+            {company.founded_at && <span>تأسست عام {new Date(company.founded_at).getFullYear()}</span>}
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-10">
+      <div className="container mx-auto px-4 py-10 flex-1">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
             {/* About */}
             {company.description && (
-              <div className="bg-card rounded-2xl p-6 card-elevated border border-border">
+              <div id="about" className="bg-card rounded-2xl p-6 card-elevated border border-border">
                 <h2 className="font-heading text-xl font-bold text-foreground mb-3">عن الشركة</h2>
                 <p className="text-muted-foreground leading-relaxed">{company.description}</p>
               </div>
@@ -88,7 +148,7 @@ const CompanyProfile = () => {
 
             {/* Projects */}
             {projects.length > 0 && (
-              <div className="bg-card rounded-2xl p-6 card-elevated border border-border">
+              <div id="projects" className="bg-card rounded-2xl p-6 card-elevated border border-border">
                 <h2 className="font-heading text-xl font-bold text-foreground mb-4 flex items-center gap-2">
                   <FolderKanban className="w-5 h-5 text-accent" /> المشاريع
                 </h2>
@@ -113,7 +173,7 @@ const CompanyProfile = () => {
 
             {/* Services */}
             {services.length > 0 && (
-              <div className="bg-card rounded-2xl p-6 card-elevated border border-border">
+              <div id="services" className="bg-card rounded-2xl p-6 card-elevated border border-border">
                 <h2 className="font-heading text-xl font-bold text-foreground mb-4 flex items-center gap-2">
                   <Wrench className="w-5 h-5 text-accent" /> الخدمات
                 </h2>
@@ -139,9 +199,25 @@ const CompanyProfile = () => {
               </div>
             )}
 
+            {/* Gallery */}
+            {gallery.length > 0 && (
+              <div id="gallery" className="bg-card rounded-2xl p-6 card-elevated border border-border">
+                <h2 className="font-heading text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                  <Images className="w-5 h-5 text-accent" /> معرض الصور
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {gallery.map((img) => (
+                    <div key={img.id} className="rounded-xl overflow-hidden border border-border">
+                      <img src={img.image_url} alt="Gallery" className="w-full h-40 object-cover" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Team */}
             {team.length > 0 && (
-              <div className="bg-card rounded-2xl p-6 card-elevated border border-border">
+              <div id="team" className="bg-card rounded-2xl p-6 card-elevated border border-border">
                 <h2 className="font-heading text-xl font-bold text-foreground mb-4 flex items-center gap-2">
                   <Users className="w-5 h-5 text-accent" /> فريق العمل
                 </h2>
@@ -161,7 +237,7 @@ const CompanyProfile = () => {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-4">
+          <div className="space-y-4" id="contact">
             <div className="bg-card rounded-2xl p-6 card-elevated border border-border space-y-4 sticky top-20">
               <h3 className="font-heading text-lg font-bold text-foreground">معلومات التواصل</h3>
               <div className="space-y-3">
@@ -202,6 +278,19 @@ const CompanyProfile = () => {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-card border-t border-border py-6 mt-auto">
+        <div className="container mx-auto px-4 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <img src={appLogo} alt="مكتبي" className="w-6 h-6 rounded object-contain" />
+            <span className="font-heading text-sm font-bold text-foreground">مكتبي</span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} مكتبي. جميع الحقوق محفوظة.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
